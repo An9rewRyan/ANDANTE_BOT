@@ -8,6 +8,8 @@ aiogram = "*"
 uvloop = "*"
 ujson = "*"
 python-dotenv = "*"
+requests = "*"
+aiogram-dialog = "*"
 
 [dev-packages]
 
