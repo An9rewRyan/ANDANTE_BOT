@@ -34,8 +34,8 @@ async def track_name(c: CallbackQuery, button: Button, manager: DialogManager):
 
 @dp.message_handler(state=States.track)
 async def send_message(message: Message, state: FSMContext):
-    track_name = out(message.text)
-    await bot.send_audio(message.from_user.id, open(os.path.join(BASE_DIR, track_name), "rb"), performer = "Unknown", title = track_name)
+    track_name, artist = out(message.text)
+    await bot.send_audio(message.from_user.id, open(os.path.join(BASE_DIR, f'{artist} - {track_name}.mp3'), "rb"), performer = artist, title = track_name)
     os.remove(os.path.join(BASE_DIR, track_name))
 
 main_window = Window(

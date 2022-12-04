@@ -36,11 +36,19 @@ def get_song(title: str):
         if elem["category"] == "Songs":
             return elem
 
-def load_video(link: str, title: str) -> str:
-    ydl_opts['outtmpl'] = f'ANDANTE_BOT/{title}.mp3'
+def load_video(link: str, title: str, artist: str) -> str:
+    ydl_opts['outtmpl'] = f'ANDANTE_BOT/{artist} - {title}.mp3'
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([link])
-    return f'{title}.mp3'
+    return title
+
+def get_artist_name(song) -> str:
+    if "artists" in song:
+        artists = ''
+        for artist in song["artists"]:
+            artists+=artist["name"]+", "
+        return artists[:-2]
+    return 'Unknown'
 
 def get_link(elem: dict):
     return f'https://music.youtube.com/watch?v={elem["videoId"]}' 
@@ -48,8 +56,8 @@ def get_link(elem: dict):
 def out(title: str):
     song = get_song(title)
     link = get_link(song)
-    print(song)
-    return load_video(link, song["title"])
+    artist = get_artist_name(song)
+    return load_video(link, song["title"], artist), artist
 
 # main('highway to hell')
 
