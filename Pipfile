@@ -10,6 +10,8 @@ ujson = "*"
 python-dotenv = "*"
 requests = "*"
 aiogram-dialog = "*"
+pytube = "*"
+innertube = "*"
 
 [dev-packages]
 

@@ -10,7 +10,7 @@ from aiogram_dialog import Window, Dialog, DialogRegistry, DialogManager, StartM
 from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.text import Const
 from aiogram.types import CallbackQuery
-import requests
+from youtube import out
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
@@ -34,7 +34,9 @@ async def track_name(c: CallbackQuery, button: Button, manager: DialogManager):
 
 @dp.message_handler(state=States.track)
 async def send_message(message: Message, state: FSMContext):
-    await bot.send_audio(message.from_user.id, open(os.path.join(BASE_DIR, f'{message.text}.mp3'), "rb"), performer = "Unknown", title = "Unknown")
+    track_name = out(message.text)
+    await bot.send_audio(message.from_user.id, open(os.path.join(BASE_DIR, track_name), "rb"), performer = "Unknown", title = track_name)
+    os.remove(os.path.join(BASE_DIR, track_name))
 
 main_window = Window(
     Const("Вы хотите найти трек?"),
