@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import youtube_dl
+import yt_dlp as youtube_dl
 from ytmusicapi import YTMusic
 
 class MyLogger(object):
@@ -58,14 +58,4 @@ def out(title: str):
     link = get_link(song)
     artist = get_artist_name(song)
     return load_video(link, song["title"], artist), artist
-
-# main('highway to hell')
-
-
-
-
-
-
-# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-#     ydl.download(['https://music.youtube.com/watch?v=gEPmA3USJdI'])
 

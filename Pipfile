@@ -12,6 +12,7 @@ requests = "*"
 aiogram-dialog = "*"
 pytube = "*"
 innertube = "*"
+yt-dlp = "*"
 
 [dev-packages]
 
