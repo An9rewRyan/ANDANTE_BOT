@@ -9,7 +9,6 @@ from aiogram.dispatcher import FSMContext
 from aiogram_dialog import Window, Dialog, DialogRegistry, DialogManager, StartMode
 from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.text import Const
-from aiogram.types import CallbackQuery
 from youtube import out
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -28,9 +27,10 @@ class States(StatesGroup):
     main = State()
     track = State()
 
-async def track_name(c: CallbackQuery, button: Button, manager: DialogManager):
+@dp.message_handler(commands=["title"])
+async def track_name(message: Message, dialog_manager: DialogManager):
     await States.track.set()
-    await c.message.reply("Введите название трека: ")
+    await message.reply("Введите название трека: ")
 
 @dp.message_handler(state=States.track)
 async def send_message(message: Message, state: FSMContext):
@@ -39,8 +39,8 @@ async def send_message(message: Message, state: FSMContext):
     os.remove(os.path.join(BASE_DIR, f'{artist} - {track_name}.mp3'))
 
 main_window = Window(
-    Const("Вы хотите найти трек?"),
-    Button(Const("Да"), id="sender", on_click=track_name),
+    Const("Меню"),
+    Button(Const("Найти трек по названию"), id="sender", on_click=track_name),
     state=States.main,
 )
 

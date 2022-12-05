@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import yt_dlp as youtube_dl
+import yt_dlp
 from ytmusicapi import YTMusic
 
 class MyLogger(object):
@@ -18,14 +18,10 @@ def my_hook(d):
 
 ydl_opts = {
     'format': 'bestaudio/best',
-    'outtmpl': '',
-    'postprocessors': [{
+    'postprocessors': [{  
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-    'logger': MyLogger(),
-    'progress_hooks': [my_hook],
+    }]
 }
 
 yt = YTMusic()
@@ -36,10 +32,13 @@ def get_song(title: str):
         if elem["category"] == "Songs":
             return elem
 
-def load_video(link: str, title: str, artist: str) -> str:
+def load_video(link: str, title: str, artist: str) -> str|None:
     ydl_opts['outtmpl'] = f'ANDANTE_BOT/{artist} - {title}.mp3'
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([link])
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        error_code = ydl.download(link)
+    if error_code:
+        print(error_code)
+        return None
     return title
 
 def get_artist_name(song) -> str:
@@ -58,4 +57,5 @@ def out(title: str):
     link = get_link(song)
     artist = get_artist_name(song)
     return load_video(link, song["title"], artist), artist
+
 
