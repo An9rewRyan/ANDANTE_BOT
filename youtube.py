@@ -26,13 +26,14 @@ def my_hook(d):
 
 ydl_opts = {
     'format': 'bestaudio/best',
+    # 'concurrent_fragment_downloads': 16,
     # "quiet":    True,
     # "simulate": True,
     # "forceurl": True,
-    'postprocessors': [{  
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-    }],
+    # 'postprocessors': [{  
+    #     'key': 'FFmpegExtractAudio',
+    #     'preferredcodec': 'mp3',
+    # }],
     'progress_hooks': [my_hook]
 }
 
