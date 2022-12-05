@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiogram = "*"
 uvloop = "*"
 ujson = "*"
 python-dotenv = "*"
@@ -13,8 +12,13 @@ aiogram-dialog = "*"
 pytube = "*"
 innertube = "*"
 yt-dlp = "*"
+aiogram = "*"
+bs4 = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.10"
+
+[pipenv]
+allow_prereleases = true
